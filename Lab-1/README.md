@@ -6,13 +6,6 @@ This project implements a **Single Layer Perceptron (SLP)** from scratch using P
 
 ---
 
-
-# Objective
-
-The objective of this experiment is to design and implement a **Single Layer Perceptron** from scratch for binary classification. The perceptron is trained using the Perceptron Learning Rule and evaluated on the Banknote Authentication dataset.
-
----
-
 # Dataset Information
 
 ## Dataset Name
