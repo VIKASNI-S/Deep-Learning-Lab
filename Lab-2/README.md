@@ -1,4 +1,3 @@
-# Deep Learning Laboratory – Experiment 2
 ## Multi-Layer Perceptron (MLP) for Fashion-MNIST Classification with Hyperparameter Optimization
 
 ## Overview
