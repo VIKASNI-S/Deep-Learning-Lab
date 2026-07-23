@@ -1,0 +1,645 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{float}
+
+\usepackage{caption}
+\usepackage{longtable}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Shiv Nadar University Chennai}\\[2mm]
+\end{center}
+
+\renewcommand{\arraystretch}{1.4}
+
+\begin{tabular}{|p{3.5cm}|p{8cm}|p{2cm}|}
+\hline
+Degree \& Branch & B.Tech Artificial Intelligence \& Data Science & Semester V\\ \hline
+Subject Code \& Name & CS3807 -- Deep Learning Laboratory & AY: 2026--27\\ \hline
+\end{tabular}
+
+\vspace{3mm}
+
+\begin{center}
+\Large\textbf{Experiment 1}\\
+\large\textbf{Implementation of a Single Layer Perceptron for Binary Classification}
+\end{center}
+
+%----------------------------------------------------------
+
+\section*{1. Objective}
+
+The objective of this experiment is to understand the concept of an artificial neuron and implement a Single Layer Perceptron from scratch for binary classification. Students will learn the perceptron learning algorithm, understand the importance of activation functions, visualize the learning process, and evaluate the classifier using a real-world dataset.
+
+%----------------------------------------------------------
+
+\section*{2. Tasks to be Performed}
+
+\begin{enumerate}[leftmargin=*]
+\item Download and understand the dataset.
+\item Perform Exploratory Data Analysis (EDA).
+\item Preprocess the dataset.
+\item Implement a Single Layer Perceptron from scratch.
+\item Train the model using the perceptron learning rule.
+\item Evaluate the classifier using standard performance metrics.
+\item Analyze the effect of different learning rates.
+\item Compare the implementation with Scikit-learn's Perceptron (optional).
+\end{enumerate}
+
+%----------------------------------------------------------
+
+\section*{3. Background Theory}
+
+An Artificial Neuron is the fundamental building block of a neural network. It receives one or more input features, multiplies them by corresponding weights, adds a bias term, and applies an activation function to determine the output.
+
+The Single Layer Perceptron is the earliest supervised learning algorithm capable of solving linearly separable binary classification problems.
+
+\subsection*{Mathematical Formulation}
+
+Weighted Sum
+
+\[
+z=\mathbf{w}^{T}\mathbf{x}+b
+\]
+
+where
+
+\begin{itemize}
+\item $\mathbf{x}$ : Input vector
+\item $\mathbf{w}$ : Weight vector
+\item $b$ : Bias
+\item $z$ : Linear combination
+\end{itemize}
+
+Prediction
+
+\[
+\hat y=f(z)
+\]
+
+Weight Update Rule
+
+\[
+\mathbf{w}_{new}
+=
+\mathbf{w}_{old}
++
+\eta
+(y-\hat y)
+\mathbf{x}
+\]
+
+Bias Update
+
+\[
+b_{new}
+=
+b_{old}
++
+\eta
+(y-\hat y)
+\]
+
+where $\eta$ denotes the learning rate.
+
+%----------------------------------------------------------
+
+\section*{4. Activation Functions}
+
+An activation function determines the output of a neuron based on the weighted sum of its inputs. It introduces non-linearity, enabling neural networks to learn complex patterns. Although the perceptron uses only the Step Activation Function, modern deep learning models employ differentiable activation functions for efficient optimization through backpropagation.
+
+\subsection*{Step Activation Function}
+
+\[
+f(z)=
+\begin{cases}
+1,&z\ge0\\
+0,&z<0
+\end{cases}
+\]
+
+The Step Activation Function produces a binary output and is therefore suitable only for linearly separable binary classification problems.
+
+\begin{center}
+\begin{tabular}{|p{2.5cm}|p{3cm}|p{6cm}|}
+\hline
+\textbf{Activation} & \textbf{Output Range} & \textbf{Typical Applications}\\
+\hline
+Step & $\{0,1\}$ & Classical Perceptron\\
+\hline
+Sigmoid & $(0,1)$ & Binary Classification Output Layer\\
+\hline
+Tanh & $(-1,1)$ & Hidden Layers (Traditional Networks)\\
+\hline
+ReLU & $[0,\infty)$ & Hidden Layers in CNNs and MLPs\\
+\hline
+Leaky ReLU & $(-\infty,\infty)$ & Avoiding Dying ReLU\\
+\hline
+Softmax & $(0,1)$ & Multi-class Classification Output Layer\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Note:} This experiment uses only the Step Activation Function. The remaining activation functions will be studied in subsequent experiments involving Multilayer Perceptrons and Deep Neural Networks.
+
+%----------------------------------------------------------
+
+\section*{5. Dataset Description}
+
+\textbf{Dataset:} Banknote Authentication Dataset
+
+\textbf{Source:} UCI Machine Learning Repository
+
+\textbf{Download Link:}
+
+\url{https://archive.ics.uci.edu/dataset/267/banknote+authentication}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Instances & 1372\\
+\hline
+Features & 4 Numerical Features\\
+\hline
+Classes & 2\\
+\hline
+Missing Values & None\\
+\hline
+Task & Binary Classification\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Feature Description}
+
+\begin{itemize}
+\item Variance
+\item Skewness
+\item Curtosis
+\item Entropy
+\end{itemize}
+
+Target Class
+
+\begin{itemize}
+\item 0 -- Authentic Banknote
+\item 1 -- Forged Banknote
+\end{itemize}
+
+%----------------------------------------------------------
+
+\section*{6. Experimental Procedure}
+
+\textbf{Task 1: Dataset Exploration}
+
+\begin{itemize}
+\item Load the dataset.
+\item Display the first five samples.
+\item Determine dataset dimensions.
+\item Identify missing values.
+\item Display descriptive statistics.
+\end{itemize}
+
+\textbf{Expected Output}
+
+Dataset summary and statistical information.
+
+\vspace{2mm}
+
+\textbf{Task 2: Exploratory Data Analysis}
+
+Generate
+
+\begin{itemize}
+\item Histograms
+\item Correlation Heatmap
+\item Scatter Plot
+\item Boxplots
+\end{itemize}
+
+\vspace{2mm}
+
+\textbf{Task 3: Data Preprocessing}
+
+\begin{itemize}
+\item Normalize all numerical features.
+\item Split the dataset into Training (80\%) and Testing (20\%).
+\end{itemize}
+
+\vspace{2mm}
+
+\textbf{Task 4: Perceptron Implementation}
+
+Implement from scratch
+
+\begin{itemize}
+\item Weight Initialization
+\item Bias Initialization
+\item Step Activation Function
+\item Forward Propagation
+\item Perceptron Learning Rule
+\end{itemize}
+
+\vspace{2mm}
+
+\textbf{Task 5: Model Training}
+
+Display
+
+\begin{itemize}
+\item Epoch Number
+\item Misclassified Samples
+\item Updated Weights
+\item Updated Bias
+\end{itemize}
+
+\vspace{2mm}
+
+\textbf{Task 6: Model Evaluation}
+
+Compute
+
+\begin{itemize}
+\item Accuracy
+\item Precision
+\item Recall
+\item F1-score
+\item Confusion Matrix
+\end{itemize}
+
+%----------------------------------------------------------
+
+\section*{6. Source Code}
+
+
+The complete implementation of the Single Layer Perceptron experiment, including the source code, dataset details, execution instructions, and dependencies, is available in the GitHub repository.
+
+\noindent\textbf{GitHub Repository:} \\
+\url{https://github.com/VIKASNI-S/Deep-Learning-Lab/blob/main/Lab-1/Lab-1%20Sorce%20Code.ipynb}\\
+
+
+\section{Mandatory Plots}
+
+\begin{longtable}{|p{3.5cm}|p{3.5cm}|p{6cm}|}
+\hline
+\textbf{Plot} & \textbf{Purpose} & \textbf{Expected Inference} \\
+\hline
+Feature Histograms & Distribution Analysis & Identify skewness and outliers.\\
+\hline
+Correlation Heatmap & Feature Relationship & Observe highly correlated features.\\
+\hline
+Scatter Plot & Class Distribution & Determine whether classes are approximately linearly separable.\\
+\hline
+Training Error vs Epoch & Learning Behaviour & Verify convergence of the perceptron.\\
+\hline
+Weight Evolution & Parameter Analysis & Observe stabilization of learned weights.\\
+\hline
+Bias Evolution & Parameter Analysis & Understand the role of the bias term.\\
+\hline
+Confusion Matrix & Performance Evaluation & Interpret TP, FP, TN and FN.\\
+\hline
+Learning Rate Comparison & Hyperparameter Study & Compare convergence behaviour for different learning rates.\\
+\hline
+Decision Boundary (Optional) & Visualization & Illustrate the separating hyperplane using two selected features.\\
+\hline
+\end{longtable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Histograms.eps}
+\caption{Feature Histograms}
+\label{fig:histogram}
+\end{figure}
+
+\noindent
+The histograms show the distribution of the four banknote features: Variance, Skewness, Curtosis, and Entropy. The features exhibit different ranges and distributions, with some showing skewness and a wider spread of values. This indicates that normalization is necessary before training the perceptron.
+
+\vspace{0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Correlation_Heatmap.eps}
+\caption{Correlation Heatmap}
+\label{fig:heatmap}
+\end{figure}
+
+\noindent
+The correlation heatmap reveals the relationships among the four extracted image features of the banknotes. Some features show strong positive or negative correlations, indicating that they contain related information useful for distinguishing genuine and forged banknotes. The target class also shows noticeable correlation with several features, suggesting their importance in classification.
+
+\vspace{0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Scatter_Plot.eps}
+\caption{Scatter Plot}
+\label{fig:scatter}
+\end{figure}
+
+\noindent
+The scatter plot of Variance and Skewness shows that genuine and forged banknotes form distinct clusters with only slight overlap. This indicates that these features provide good discriminatory information and that the dataset is approximately linearly separable, making it suitable for a single-layer perceptron.
+
+\vspace{0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Boxplots.eps}
+\caption{Box Plot}
+\label{fig:scatter}
+\end{figure}
+
+\noindent
+The box plots illustrate the distribution, spread, and presence of outliers for each feature in the Banknote Authentication dataset. Variance, Skewness, Curtosis, and Entropy exhibit several outliers, indicating the presence of extreme observations. Despite these outliers, the overall feature distributions are well-defined, suggesting that the dataset is suitable for training the Perceptron model after appropriate preprocessing such as normalization.
+\vspace{0.5cm}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Learning_Curve.eps}
+\caption{Training Error vs Epoch}
+\label{fig:error}
+\end{figure}
+
+\noindent
+The number of misclassified banknote samples generally decreased as the epochs increased, showing that the perceptron successfully learned the classification pattern. A small fluctuation in misclassified samples was observed during training due to continuous weight updates, which is a normal characteristic of the perceptron learning algorithm. Overall, the decreasing trend indicates successful convergence.
+
+\vspace{0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Weight_Evolution.eps}
+\caption{Weight Evolution}
+\label{fig:weights}
+\end{figure}
+
+\noindent
+The weights corresponding to the banknote features changed significantly during the initial epochs as the perceptron learned the importance of each feature. As training progressed, the weight values gradually stabilized, indicating convergence toward an optimal linear decision boundary for classifying genuine and forged banknotes.
+
+\vspace{0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Bias_Evolution.eps}
+\caption{Bias Evolution}
+\label{fig:bias}
+\end{figure}
+
+\noindent
+The bias value was updated throughout training to improve the position of the decision boundary. After several epochs, the bias gradually stabilized, indicating that the perceptron had learned an appropriate threshold for distinguishing between genuine and forged banknotes.
+
+\vspace{0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Confusion_Matrix.eps}
+\caption{Confusion Matrix}
+\label{fig:confusion}
+\end{figure}
+
+\noindent
+The confusion matrix shows that the majority of genuine and forged banknotes were classified correctly, with only a few misclassifications. This demonstrates that the perceptron effectively learned the characteristics of the Banknote Authentication dataset and achieved good classification performance on unseen test data.
+
+\vspace{0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Learning_Rate_Comparison.eps}
+\caption{Learning Rate Comparison}
+\label{fig:learningrate}
+\end{figure}
+
+\noindent
+The learning rate comparison demonstrates how different learning rates influence the convergence of the perceptron on the Banknote Authentication dataset. Smaller learning rates resulted in smoother but slower convergence, whereas larger learning rates reached convergence faster with slight fluctuations. An appropriate learning rate provided efficient and stable learning for this dataset.
+%----------------------------------------------------------
+
+\section*{8. Performance Tables}
+
+\textbf{Training Summary}
+
+\begin{tabular}{|p{6cm}|p{7cm}|}
+\hline
+Dataset Size & 1372\\ 
+\hline
+Train/Test Split & 80:20\\
+\hline
+Learning Rate & 0.01\\
+\hline
+Epochs & 20\\
+\hline
+Final Weights & [-0.16364416, -0.19457442, -0.16126111, -0.00640573]\\
+\hline
+Final Bias & -0.0700\\ 
+\hline
+Accuracy & 0.9855\\
+\hline
+Precision & 0.9683\\
+\hline
+Recall & 1.0\\
+\hline
+F1-score & 0.9839\\
+\hline
+\end{tabular}
+
+\vspace{3mm}
+
+
+%----------------------------------------------------------
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+Epoch & Errors & W1 & W2 & W3 & W4 & Bias\\
+\hline
+1  & 59 & -0.068025 & -0.093809 & -0.067819 & -0.011036 & -0.030 \\
+2  & 25 & -0.077536 & -0.104214 & -0.081067 &  0.003453 & -0.040 \\
+3  & 20 & -0.080213 & -0.112661 & -0.091664 & -0.003621 & -0.040 \\
+4  & 19 & -0.088281 & -0.119595 & -0.100081 &  0.008909 & -0.050 \\
+5  & 20 & -0.099090 & -0.129506 & -0.103721 &  0.010233 & -0.050 \\
+6  & 17 & -0.102683 & -0.127692 & -0.113383 & -0.000959 & -0.060 \\
+7  & 24 & -0.108134 & -0.139275 & -0.110844 & -0.009393 & -0.060 \\
+8  & 22 & -0.117019 & -0.135681 & -0.131877 & -0.002491 & -0.060 \\
+9  & 20 & -0.117554 & -0.146960 & -0.136437 & -0.006154 & -0.060 \\
+10 & 20 & -0.130691 & -0.154124 & -0.125042 & -0.006007 & -0.060 \\
+11 & 22 & -0.134531 & -0.164116 & -0.132884 & -0.001838 & -0.060 \\
+12 & 20 & -0.128706 & -0.160035 & -0.147151 &  0.007633 & -0.080 \\
+13 & 16 & -0.134286 & -0.162712 & -0.145837 &  0.003939 & -0.080 \\
+14 & 24 & -0.135704 & -0.167261 & -0.154905 &  0.000066 & -0.080 \\
+15 & 17 & -0.136189 & -0.180152 & -0.151786 & -0.015007 & -0.070 \\
+16 & 21 & -0.146447 & -0.187732 & -0.150660 & -0.003383 & -0.060 \\
+17 & 19 & -0.143050 & -0.179299 & -0.168548 & -0.016878 & -0.070 \\
+18 & 18 & -0.160345 & -0.184462 & -0.154263 & -0.001339 & -0.070 \\
+19 & 23 & -0.150317 & -0.185344 & -0.171170 & -0.010111 & -0.080 \\
+20 & 19 & -0.163644 & -0.194574 & -0.161261 & -0.006406 & -0.070 \\
+\hline
+\end{tabular}
+}
+\caption{Epoch-wise Learning Progress}
+\end{table}
+
+\section*{9. Additional Tasks}
+
+\begin{enumerate}[leftmargin=*]
+\item Compare the Step and Sigmoid activation functions. Discuss why the Step Activation Function is not used in modern deep learning models.
+\item Compare the implementation with Scikit-learn's Perceptron.
+\item Repeat the experiment using learning rates 0.001, 0.01 and 0.1.
+\item Explain why a Single Layer Perceptron cannot solve the XOR problem.
+\item Study the effect of feature normalization on model convergence.
+\end{enumerate}
+
+
+
+\addcontentsline{toc}{section}{9. Additional Tasks Answers}
+
+\subsection*{9.1 Comparison of Step and Sigmoid Activation Functions}
+\addcontentsline{toc}{subsection}{9.1 Comparison of Step and Sigmoid Activation Functions}
+
+
+\begin{table}[H]
+\centering
+\caption{Comparison of Step and Sigmoid Activation Functions}
+\label{tab:activation_comparison}
+\begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Feature} & \textbf{Step Activation} & \textbf{Sigmoid Activation} \\
+\hline
+Output Range & 0 or 1 & 0 to 1 \\
+\hline
+Nature & Binary & Continuous and Smooth \\
+\hline
+Differentiable & No & Yes \\
+\hline
+Gradient & Undefined at threshold & Well-defined \\
+\hline
+Suitable for Backpropagation & No & Yes \\
+\hline
+Typical Usage & Classical Perceptron & Neural Networks \\
+\hline
+\end{tabular}
+\end{table}
+
+The Step Activation Function produces binary outputs (0 or 1), making it suitable for simple binary classification tasks. However, it is not differentiable, preventing the computation of gradients required during training. Since modern deep learning relies on gradient-based optimization methods such as Gradient Descent and Adam, the Step Activation Function cannot be effectively used.
+
+The Sigmoid Activation Function is smooth and differentiable, allowing gradients to be computed for backpropagation. Although it suffers from the vanishing gradient problem in deep networks, it is far more suitable for neural network training than the Step Activation Function.
+
+\subsection*{9.2 Comparison with Scikit-learn's Perceptron}
+\addcontentsline{toc}{subsection}{9.2 Comparison with Scikit-learn's Perceptron}
+
+
+\begin{table}[H]
+\centering
+\caption{Comparison of Custom Perceptron and Scikit-learn Perceptron}
+\label{tab:sklearn_comparison}
+\begin{tabular}{|p{4cm}|p{4.5cm}|p{4.5cm}|}
+\hline
+\textbf{Aspect} & \textbf{Custom Implementation} & \textbf{Scikit-learn Perceptron} \\
+\hline
+Weight Update & Manual implementation & Automatic implementation \\
+\hline
+Learning Algorithm & User-defined & Optimized implementation \\
+\hline
+Ease of Use & Moderate & Easy \\
+\hline
+Performance & Educational & Production-ready \\
+\hline
+Additional Features & Limited & Regularization, Shuffling, Early Stopping \\
+\hline
+\end{tabular}
+\end{table}
+
+The custom implementation helps understand the mathematical concepts behind the Perceptron Learning Algorithm. In contrast, Scikit-learn provides an optimized implementation with additional features such as automatic convergence checks, data shuffling, regularization, and efficient computation. Both implementations achieve similar classification performance when trained using the same dataset and hyperparameters.
+
+\subsection*{9.3 Effect of Different Learning Rates}
+\addcontentsline{toc}{subsection}{9.3 Effect of Different Learning Rates}
+
+The experiment was repeated using learning rates of 0.001, 0.01, and 0.1. The observations are summarized in Table~\ref{tab:learning_rates}.
+
+\begin{table}[H]
+\centering
+\caption{Effect of Learning Rate on Training}
+\label{tab:learning_rates}
+\begin{tabular}{|p{3cm}|p{9cm}|}
+\hline
+\textbf{Learning Rate} & \textbf{Observation} \\
+\hline
+0.001 & Slow learning and requires more epochs for convergence. \\
+\hline
+0.01 & Stable convergence with balanced weight updates. \\
+\hline
+0.1 & Faster convergence but may cause oscillations before reaching the optimum solution. \\
+\hline
+\end{tabular}
+\end{table}
+
+A small learning rate (0.001) updates the weights slowly, increasing the training time. A moderate learning rate (0.01) provides stable convergence and consistent learning. A larger learning rate (0.1) accelerates convergence but may produce fluctuations due to larger weight updates. For the Banknote Authentication dataset, a learning rate of 0.01 provided the best balance between convergence speed and stability.
+
+\subsection*{9.4 Why a Single Layer Perceptron Cannot Solve the XOR Problem}
+\addcontentsline{toc}{subsection}{9.4 Why a Single Layer Perceptron Cannot Solve the XOR Problem}
+
+
+A Single Layer Perceptron can classify only linearly separable datasets because it learns a single linear decision boundary. The XOR dataset is not linearly separable, meaning no single straight line can correctly separate all the data points into their respective classes.
+
+Therefore, regardless of the number of training epochs, a Single Layer Perceptron cannot correctly classify the XOR dataset. Solving the XOR problem requires a Multi-Layer Perceptron (MLP) with one or more hidden layers and nonlinear activation functions such as Sigmoid or ReLU. This limitation of the Single Layer Perceptron motivated the development of modern deep neural networks.
+
+\subsection*{9.5 Effect of Feature Normalization on Model Convergence}
+\addcontentsline{toc}{subsection}{9.5 Effect of Feature Normalization on Model Convergence}
+
+Feature normalization scales all input features to a similar numerical range before training.
+
+\begin{table}[H]
+\centering
+\caption{Effect of Feature Normalization}
+\label{tab:normalization}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Without Normalization} & \textbf{With Normalization} \\
+\hline
+Slower convergence & Faster convergence \\
+\hline
+Uneven weight updates & Balanced weight updates \\
+\hline
+Requires more epochs & Requires fewer epochs \\
+\hline
+Less stable learning & More stable learning \\
+\hline
+\end{tabular}
+\end{table}
+
+Without normalization, features with larger numerical values dominate the learning process, leading to slower and less stable convergence. After normalization, all features contribute equally to weight updates, resulting in faster convergence and smoother optimization. Although the final classification accuracy remains nearly unchanged for the Banknote Authentication dataset, normalization significantly improves training efficiency and convergence stability.
+
+
+% ----------------------------------------------------------
+
+\section*{10. References}
+
+\begin{enumerate}
+\item F. Rosenblatt, ``The Perceptron,'' \emph{Psychological Review}, 1958.
+\item I. Goodfellow, Y. Bengio and A. Courville, \emph{Deep Learning}, MIT Press, 2016.
+\item C. M. Bishop, \emph{Pattern Recognition and Machine Learning}, Springer, 2006.
+\item S. Haykin, \emph{Neural Networks and Learning Machines}, Pearson, 2009.
+\item UCI Machine Learning Repository -- Banknote Authentication Dataset.
+\item Scikit-learn Documentation: Perceptron.
+\end{enumerate}
+
+\end{document}
