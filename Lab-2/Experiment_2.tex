@@ -1,0 +1,435 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{float}
+
+\usepackage{caption}
+\usepackage{longtable}
+\setlist{nosep}
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{Shiv Nadar University Chennai}}\\
+\textbf{CS3807 -- Deep Learning Laboratory}\\
+\textbf{Experiment 2}\\
+{\large\textbf{Implementation of a Multi-Layer Perceptron (MLP) for Multi-Class Image Classification}}
+\end{center}
+
+\renewcommand{\arraystretch}{1.25}
+
+\begin{tabular}{|p{3.8cm}|p{8cm}|p{2cm}|}
+\hline
+Degree \& Branch & B.Tech Artificial Intelligence \& Data Science & Semester V\\ \hline
+Subject Code \& Name & CS3807 -- Deep Learning Laboratory & AY: 2026--27\\ \hline
+\end{tabular}
+
+\section*{1. Objective}
+Implement an MLP using TensorFlow/Keras on the Fashion-MNIST dataset. Learn image preprocessing, flattening, model construction, training, evaluation, and automated hyperparameter optimization.
+
+\section*{2. Learning Outcomes}
+Students will be able to:
+\begin{enumerate}
+\item Explain the architecture of an MLP.
+\item Preprocess image datasets.
+\item Build and train an MLP.
+\item Evaluate classification performance.
+\item Perform automated hyperparameter optimization.
+\item Recommend the best model configuration.
+\end{enumerate}
+
+\section*{3. Background Theory}
+An MLP consists of an input layer, hidden layers and an output layer.
+
+\[
+z^{(l)}=W^{(l)}a^{(l-1)}+b^{(l)},\qquad
+a^{(l)}=f(z^{(l)})
+\]
+
+Output layer:
+\[
+\hat y=\mathrm{Softmax}(z)
+\]
+
+Loss:
+\[
+L=-\sum_i y_i\log(\hat y_i)
+\]
+
+Recommended architecture:
+
+\begin{center}
+784 $\rightarrow$ Dense(128, ReLU) $\rightarrow$ Dense(64, ReLU) $\rightarrow$ Dense(10, Softmax)
+\end{center}
+
+\section*{4. Dataset}
+Dataset: Fashion-MNIST
+
+Training Images: 60,000 \\
+Testing Images: 10,000 \\
+Classes: 10 \\
+Image Size: $28\times28$
+
+\section*{5. Image Preprocessing}
+
+Fashion-MNIST images are stored as $28\times28$ matrices. Dense layers require a one-dimensional feature vector.
+
+\[
+28\times28=784
+\]
+
+Example:
+
+\[
+\begin{bmatrix}
+10&20\\30&40
+\end{bmatrix}
+\rightarrow
+[10,20,30,40]
+\]
+
+Perform the following preprocessing:
+
+\begin{enumerate}
+\item Load Fashion-MNIST.
+\item Display sample images.
+\item Flatten images.
+\item Normalize pixels to [0,1].
+\item Convert labels into one-hot vectors.
+\end{enumerate}
+
+\section*{6. Experimental Procedure}
+
+\textbf{Task 1: Dataset Exploration}
+\begin{itemize}
+\item Load Fashion-MNIST.
+\item Print dataset dimensions.
+\item Display ten sample images.
+\item Plot class distribution.
+\end{itemize}
+
+\textbf{Expected Output:}
+Dataset summary and sample images.
+
+\bigskip
+
+\textbf{Task 2: Data Preprocessing}
+
+\begin{itemize}
+\item Flatten images.
+\item Normalize pixel values.
+\item Print tensor shapes before and after preprocessing.
+\end{itemize}
+
+\bigskip
+
+\textbf{Task 3: Model Construction}
+
+Construct an MLP with
+
+\begin{itemize}
+\item Input layer (784)
+\item Dense(128, ReLU)
+\item Dense(64, ReLU)
+\item Dense(10, Softmax)
+\end{itemize}
+
+Display \texttt{model.summary()}.
+
+\bigskip
+
+\textbf{Task 4: Model Training}
+
+Compile using
+
+\begin{itemize}
+\item Optimizer: Adam
+\item Loss: Categorical Cross Entropy
+\item Metric: Accuracy
+\end{itemize}
+
+Train for 20 epochs with batch size 32.
+
+\bigskip
+
+\textbf{Task 5: Model Evaluation}
+
+Compute
+
+\begin{itemize}
+\item Accuracy
+\item Precision
+\item Recall
+\item F1-score
+\item Confusion Matrix
+\item Classification Report
+\end{itemize}
+
+\section*{7. Hyperparameter Optimization}
+
+Instead of manually selecting hyperparameters, students shall perform automated hyperparameter optimization using either \textbf{GridSearchCV} or \textbf{RandomizedSearchCV} (recommended) together with the SciKeras wrapper.
+
+Optimize the following search space.
+
+\begin{center}
+\begin{tabular}{|p{5cm}|p{7cm}|}
+\hline
+Hyperparameter & Candidate Values\\
+\hline
+Hidden Layers & 1, 2, 3\\
+Hidden Neurons & 32, 64, 128, 256\\
+Learning Rate & 0.1, 0.01, 0.001\\
+Batch Size & 16, 32, 64, 128\\
+Epochs & 10, 20, 30\\
+Optimizer & SGD, Adam, RMSProp\\
+Activation Function & ReLU, Tanh, Sigmoid\\
+Dropout Rate (Optional) & 0.0, 0.2, 0.5\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Tasks}
+
+\begin{enumerate}
+\item Build a baseline MLP model.
+\item Define the hyperparameter search space.
+\item Perform Grid Search or Randomized Search using 5-fold cross-validation.
+\item Record the best hyperparameter combination.
+\item Retrain the model using the optimized hyperparameters.
+\item Evaluate the optimized model on the testing dataset.
+\item Compare the optimized model with the baseline model.
+\end{enumerate}
+
+\section*{8. Source Code}
+
+
+The complete source code, datasets, generated plots, and report files for this experiment are available in the following GitHub repository:
+
+
+
+\noindent\textbf{GitHub Repository:} \\
+\url{https://github.com/VIKASNI-S/Deep-Learning-Lab/blob/main/Lab-2/Source%20Code.ipynb}\\
+
+
+\section*{9. Plots and their Inference}
+
+
+
+\begin{enumerate}
+\item Sample Images
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Sample_Images.eps}
+\caption{Sample Images}
+\label{fig:sampleimage}
+\end{figure}
+\noindent
+The sample images are of different types of clothing in grayscale with clear visual differences between classes. This shows that the Fashion-MNIST dataset is appropriate for multi-class image classification.
+
+\vspace{0.5cm}
+
+\item Class Distribution
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Class_Distribution.eps}
+\caption{Class Distribution}
+\label{fig:classdistribution}
+\end{figure}
+\noindent
+The class distribution is balanced with equal amount of training images for each category. This reduces class bias and helps the model learn all classes uniformly.
+
+
+\vspace{0.5cm}
+\item Training Accuracy vs Epoch
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Training_Accuracy.eps}
+\caption{Training Accuracy vs Epoch}
+\label{fig:trainingaccuracy}
+\end{figure}
+\noindent
+The training accuracy increases steadily with each epoch, indicating that the MLP is effectively learning patterns from the training data. The curve eventually stabilizes, suggesting convergence of the model.
+\vspace{0.5cm}
+
+\item Validation Accuracy vs Epoch
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Validation_Accuracy.eps}
+\caption{Validation Accuracy vs Epoch}
+\label{fig:validationaccuracy}
+\end{figure}
+\noindent
+The validation accuracy improves along with the training accuracy and stabilizes after several epochs. This indicates that the model generalizes well to unseen data without significant overfitting.
+\vspace{0.5cm}
+
+\item Training Loss vs Epoch
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Training_Loss.eps}
+\caption{Training Loss vs Epoch}
+\label{fig:trainingloss}
+\end{figure}
+\noindent
+The training loss decreases consistently as the epochs progress, showing that the model is minimizing classification errors. The gradual reduction in loss reflects successful optimization during training.
+\vspace{0.5cm}
+
+\item Validation Loss vs Epoch
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Validation_Loss.eps}
+\caption{Validation Loss vs Epoch}
+\label{fig:validationloss}
+\end{figure}
+\noindent
+The validation loss decreases initially, indicating improved learning and better generalization. Minor fluctuations in later epochs suggest slight overfitting while maintaining stable performance.
+\vspace{0.5cm}
+
+\item Confusion Matrix
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Confusion_Matrix.eps}
+\caption{Confusion Matrix}
+\label{fig:confusionmatrix}
+\end{figure}
+\noindent
+The majority of the predictions lie on the diagonal of the confusion matrix, showing correct classification for the majority of the test samples. Most of the misclassifications are among visually similar clothing categories such as Shirt, T-shirt and Pullover.
+\vspace{0.5cm}
+
+\item Hyperparameter Search Results
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Hyperparameter_Search.eps}
+\caption{Hyperparameter Search Results}
+\label{fig:hyperparameter}
+\end{figure}
+\noindent
+The hyperparameters search identifies the parameter combination that achieves the highest cross-validation accuracy. This demonstrates that selecting appropriate hyperparameters can significantly improve model performance.
+\vspace{0.5cm}
+
+\item Best Model Accuracy Comparison
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{Best_Model_Accuracy_Comparison.eps}
+\caption{Best Model Accuracy Comparison}
+\label{fig:bestmodel}
+\end{figure}
+\noindent
+The optimized MLP achieves higher classification accuracy than the baseline model. This confirms that hyperparameter optimization enhances the overall predictive performance of the network.
+\vspace{0.5cm}
+\end{enumerate}
+
+
+\section*{10. Results}
+
+\textbf{Best Hyperparameters}
+
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+Hidden Layers & 1\\\hline 
+Hidden Neurons & 128\\\hline
+Learning Rate & 0.001\\\hline
+Batch Size & 16\\\hline
+Optimizer & Adam\\\hline
+Activation Function & ReLu\\\hline
+Epochs & 10\\\hline
+Dropout & 0.0\\\hline
+Cross-validation Accuracy & 0.8781\\\hline
+Testing Accuracy & 0.8809\\\hline
+\end{tabular}
+
+\vspace{3mm}
+
+\textbf{Performance Comparison}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{4cm}|c|c|}
+\hline
+\textbf{Metric} & \textbf{Baseline} & \textbf{Optimized} \\
+\hline
+Accuracy & 0.8802 & 0.8809 \\ \hline
+Precision & 0.8824 & 0.8815 \\ \hline
+Recall & 0.8802 & 0.8809 \\ \hline
+F1-score & 0.8789 & 0.8808 \\ \hline
+Training Time & 180.11 & 85.58 \\ \hline
+\end{tabular}
+\caption{Performance Comparison Between Baseline and Optimized MLP Models}
+\end{table}
+
+\section*{11. Discussion}
+
+\begin{enumerate}
+
+\item \textbf{Which optimization method was used?}
+
+Randomized Search with 5-fold Cross Validation (\texttt{RandomizedSearchCV}) was used for automated hyperparameter optimization. This method randomly evaluates a fixed number of hyperparameter combinations and selects the configuration that achieves the highest cross-validation accuracy.
+
+\vspace{0.3cm}
+
+\item \textbf{Which hyperparameters were selected?}
+
+The optimization process selected the best combination of hyperparameters, including the number of hidden layers, number of neurons, activation function, optimizer, learning rate, batch size, number of epochs, and dropout rate. The optimal values obtained in this experiment were:
+
+\begin{itemize}
+    \item Hidden Layers : 1
+    \item Hidden Neurons : 128
+    \item Activation Function : ReLU
+    \item Optimizer : Adam
+    \item Learning Rate : 0.001
+    \item Batch Size : 16
+    \item Epochs : 10
+    \item Dropout Rate : 0.0
+\end{itemize}
+
+
+\vspace{0.3cm}
+
+\item \textbf{Did optimization improve performance?}
+
+Yes. Hyperparameter optimization improved the overall performance of the MLP model by selecting a more suitable combination of parameters. The optimized model achieved higher classification accuracy and better evaluation metrics than the baseline model.
+
+\vspace{0.3cm}
+
+\item \textbf{Which hyperparameter had the greatest impact?}
+
+Among all the hyperparameters, the learning rate and optimizer had the greatest impact on the model's performance because they directly influenced the convergence speed and stability during training. The number of hidden neurons also significantly affected the model's learning capability.
+
+\vspace{0.3cm}
+
+
+\item \textbf{Compare Grid Search and Randomized Search.}
+
+\begin{itemize}
+    \item \textbf{Grid Search} evaluates every possible combination of hyperparameters, whereas \textbf{Randomized Search} evaluates only a randomly selected subset of combinations.
+    
+    \item Grid Search is computationally expensive and time-consuming, while Randomized Search is faster and more computationally efficient.
+    
+    \item Grid Search guarantees finding the best combination within the specified search space, whereas Randomized Search finds a near-optimal solution with significantly less computation.
+    
+    \item Grid Search is suitable for small search spaces, while Randomized Search is preferred for large search spaces with many hyperparameters.
+\end{itemize}
+
+\vspace{0.3cm}
+
+\item \textbf{Recommend the best MLP configuration.}
+
+The recommended MLP configuration consists of one hidden layer with 128 neurons, ReLU activation function, Adam optimizer, learning rate of 0.001, batch size of 16, training for 10 epochs, and a dropout rate of 0.0. This configuration provided the best balance between classification accuracy, computational efficiency, and generalization on the Fashion-MNIST dataset.
+
+\end{enumerate}
+
+
+\section*{12. References}
+\begin{enumerate}
+\item Goodfellow et al., \emph{Deep Learning}.
+\item Bishop, \emph{Pattern Recognition and Machine Learning}.
+\item Haykin, \emph{Neural Networks and Learning Machines}.
+\item Fashion-MNIST Dataset.
+\item TensorFlow/Keras Documentation.
+\end{enumerate}
+
+\end{document}
