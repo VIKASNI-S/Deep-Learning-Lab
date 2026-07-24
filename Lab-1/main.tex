@@ -629,9 +629,54 @@ Less stable learning & More stable learning \\
 Without normalization, features with larger numerical values dominate the learning process, leading to slower and less stable convergence. After normalization, all features contribute equally to weight updates, resulting in faster convergence and smoother optimization. Although the final classification accuracy remains nearly unchanged for the Banknote Authentication dataset, normalization significantly improves training efficiency and convergence stability.
 
 
+\section*{10. Perceptron Learning for Logic Gates}
+
+\subsection*{10.1 OR Gate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{OR_Gate.eps}
+    \caption{Perceptron Learning Process for OR Gate}
+    \label{fig:or_gate}
+\end{figure}
+
+
+\begin{itemize}
+    \item The perceptron successfully learns the OR gate by progressively adjusting its weights and bias over successive updates.
+    \item The decision boundary stabilizes after convergence, correctly separating the single negative sample from the positive samples.
+\end{itemize}
+
+\subsection*{10.2 AND Gate}
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.8\textheight]{AND_Gate.eps}
+    \caption{Perceptron Learning Process for AND Gate}
+    \label{fig:and_gate}
+\end{figure}
+
+\begin{itemize}
+    \item The AND gate requires more weight updates before convergence because only one input belongs to the positive class.
+    \item The sequence of decision boundaries illustrates how the perceptron gradually identifies the optimal linear separator.
+\end{itemize}
+
+
+\subsection*{10.3 NOT Gate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{NOT_Gate.eps}
+    \caption{Perceptron Learning Process for NOT Gate}
+    \label{fig:not_gate}
+\end{figure}
+
+
+\begin{itemize}
+    \item The NOT gate converges rapidly since it contains only one input feature and two training samples.
+    \item The final decision boundary correctly separates the two classes after a small number of weight updates.
+\end{itemize}
 % ----------------------------------------------------------
 
-\section*{10. References}
+\section*{11. References}
 
 \begin{enumerate}
 \item F. Rosenblatt, ``The Perceptron,'' \emph{Psychological Review}, 1958.
