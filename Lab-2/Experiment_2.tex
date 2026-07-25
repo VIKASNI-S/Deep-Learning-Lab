@@ -10,6 +10,7 @@
 
 \usepackage{caption}
 \usepackage{longtable}
+\usepackage{pdflscape}
 \setlist{nosep}
 
 \begin{document}
@@ -213,7 +214,7 @@ The complete source code, datasets, generated plots, and report files for this e
 
 
 \noindent\textbf{GitHub Repository:} \\
-\url{https://github.com/VIKASNI-S/Deep-Learning-Lab/blob/main/Lab-2/Source%20Code.ipynb}\\
+\url{https://github.com/VIKASNI-S/Deep-Learning-Lab/tree/main/Lab-2}\\
 
 
 \section*{9. Plots and their Inference}
@@ -422,8 +423,60 @@ The recommended MLP configuration consists of one hidden layer with 128 neurons,
 
 \end{enumerate}
 
+\section*{12. Perceptron Learning for XOR Gate}
 
-\section*{12. References}
+The XOR gate was implemented using the perceptron learning algorithm with initial weights and bias set to zero. During training, the weights and bias were updated after every misclassified sample, and the decision boundary corresponding to each update was plotted. Unlike the OR, AND, and NOT gates, the perceptron was unable to converge because the XOR dataset is not linearly separable.
+
+\subsection*{12.1 Learning Process}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{XOR_Gate-split-split.png}
+   
+    \label{fig:xor_gate2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{XOR_Gate-split-split (1).png}
+   
+    \label{fig:xor_gate3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{XOR_Gate-split (1)-split.png}
+    
+    \label{fig:xor_gate}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{XOR_Gate-split (1)-split (1).png}
+   
+    \label{fig:xor_gate1}
+\end{figure}
+
+
+\subsection*{12.2 Analysis}
+
+\textbf{Inference:}
+\begin{itemize}
+    \item The decision boundary keeps changing throughout training and does not stabilize, indicating that the perceptron fails to find a single linear separator for the XOR dataset.
+    \item The weight values oscillate between different configurations because correcting one misclassified sample causes another previously correct sample to become misclassified.
+\end{itemize}
+
+\subsection{Pattern Preventing Convergence}
+
+The XOR gate consists of the following input-output pairs:
+
+
+
+The positive samples \((0,1)\) and \((1,0)\) lie diagonally opposite each other, while the negative samples \((0,0)\) and \((1,1)\) occupy the remaining two corners of the input space. As a result, no single straight line can separate the two classes.
+
+Consequently, the perceptron repeatedly updates its weights without reaching a stable solution, resulting in non-convergence. This demonstrates the limitation of a single-layer perceptron and motivates the use of multilayer perceptrons with hidden layers for solving non-linearly separable problems such as XOR.
+
+\section*{13. References}
 \begin{enumerate}
 \item Goodfellow et al., \emph{Deep Learning}.
 \item Bishop, \emph{Pattern Recognition and Machine Learning}.
