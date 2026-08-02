@@ -1,0 +1,612 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,longtable}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{float}
+
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\setlist{nosep}
+
+\begin{document}
+
+\begin{center}
+{\Large\textbf{Shiv Nadar University Chennai}}\\
+\textbf{CS3807 -- Deep Learning Laboratory}\\
+\textbf{Experiment 3}\\
+{\large\textbf{Implementation of Convolutional Neural Networks (CNNs) for Image Classification}}
+\end{center}
+
+\renewcommand{\arraystretch}{1.25}
+
+\begin{tabular}{|p{3.8cm}|p{8cm}|p{2cm}|}
+\hline
+Degree \& Branch & B.Tech Artificial Intelligence \& Data Science & Semester V\\ \hline
+Subject Code \& Name & CS3807 -- Deep Learning Laboratory & AY: 2026--27\\ \hline
+\end{tabular}
+
+\section*{1. Objective}
+To design, implement, and train a Convolutional Neural Network (CNN) using TensorFlow/Keras for multi-class image classification on the CIFAR-10 dataset. To analyze feature extraction, evaluate model performance using standard metrics, and visualize learned feature maps and filters to understand the CNN's learning process.
+
+\section*{2. Description}
+This experiment aims to provide hands-on experience in designing and implementing Convolutional Neural Networks (CNNs) for image classification tasks using the TensorFlow/Keras deep learning framework. The experiment begins with understanding the fundamental building blocks of CNNs, including convolutional layers, activation functions, pooling layers, flattening, and fully connected layers. Students investigate how convolution kernels extract meaningful visual features such as edges, textures, and patterns from images, while pooling operations reduce the spatial dimensions of feature maps and improve computational efficiency. The experiment also explores the influence of important CNN hyperparameters such as kernel size, stride, padding, number of filters, optimizer, batch size, and training epochs on model performance. Students visualize intermediate feature maps produced by convolutional layers to understand how CNNs progressively learn hierarchical image representations. Furthermore, they compare the effects of different pooling strategies and analyze the trainable parameters of convolutional layers. Using the CIFAR-10 image dataset containing ten object categories, students construct, train, and evaluate a CNN architecture for multi-class image classification. The performance of the model is assessed using evaluation metrics including accuracy, precision, recall, F1-score, confusion matrix, and classification report. Training and validation accuracy/loss curves, class distribution, sample images, and feature map visualizations are generated to interpret the learning behavior of the network. Through this experiment, students gain practical knowledge of CNN architecture design, feature extraction, model training, performance evaluation, and the application of deep learning techniques to computer vision problems.
+
+% \section*{3. Background Theory}
+% An MLP consists of an input layer, hidden layers and an output layer.
+
+% \[
+% z^{(l)}=W^{(l)}a^{(l-1)}+b^{(l)},\qquad
+% a^{(l)}=f(z^{(l)})
+% \]
+
+% Output layer:
+% \[
+% \hat y=\mathrm{Softmax}(z)
+% \]
+
+% Loss:
+% \[
+% L=-\sum_i y_i\log(\hat y_i)
+% \]
+
+% Recommended architecture:
+
+% \begin{center}
+% 784 $\rightarrow$ Dense(128, ReLU) $\rightarrow$ Dense(64, ReLU) $\rightarrow$ Dense(10, Softmax)
+% \end{center}
+
+% \section*{4. Dataset}
+% Dataset: Fashion-MNIST
+
+% Training Images: 60,000 \\
+% Testing Images: 10,000 \\
+% Classes: 10 \\
+% Image Size: $28\times28$
+
+% \section*{5. Image Preprocessing}
+
+% Fashion-MNIST images are stored as $28\times28$ matrices. Dense layers require a one-dimensional feature vector.
+
+% \[
+% 28\times28=784
+% \]
+
+% Example:
+
+% \[
+% \begin{bmatrix}
+% 10&20\\30&40
+% \end{bmatrix}
+% \rightarrow
+% [10,20,30,40]
+% \]
+
+% Perform the following preprocessing:
+
+% \begin{enumerate}
+% \item Load Fashion-MNIST.
+% \item Display sample images.
+% \item Flatten images.
+% \item Normalize pixels to [0,1].
+% \item Convert labels into one-hot vectors.
+% \end{enumerate}
+
+\section*{6. Experimental Procedure}
+
+\textbf{Task 1: Dataset Loading and Exploration}
+
+\begin{itemize}
+    \item Load the CIFAR-10 image classification dataset using TensorFlow/Keras.
+    \item Print the dataset dimensions and class labels.
+    \item Display sample images from each class.
+    \item Plot the class distribution of the dataset.
+\end{itemize}
+
+
+\bigskip
+
+\textbf{Task 2: Data Preprocessing}
+
+\begin{itemize}
+    \item Normalize pixel values to the range $[0,1]$.
+    \item Convert class labels to categorical format (one-hot encoding).
+    \item Split the dataset into training and testing sets.
+    \item Print the shapes of the processed datasets.
+\end{itemize}
+
+
+\bigskip
+
+\textbf{Task 3: CNN Model Construction}
+
+Construct a Convolutional Neural Network consisting of:
+
+\begin{itemize}
+    \item Convolutional layers with ReLU activation.
+    \item Max Pooling layers for spatial dimensionality reduction.
+    \item Flatten layer.
+    \item Fully Connected (Dense) layer.
+    \item Output layer with Softmax activation for 10-class classification.
+\end{itemize}
+
+Display the network architecture using \texttt{model.summary()}.
+
+
+\bigskip
+
+\textbf{Task 4: CNN Training}
+
+\begin{itemize}
+    \item Compile the CNN using an appropriate optimizer and categorical cross-entropy loss.
+    \item Train the model for a specified number of epochs using mini-batch gradient descent.
+    \item Record training and validation accuracy and loss after each epoch.
+\end{itemize}
+
+\bigskip
+
+\textbf{Task 5: Hyperparameter Analysis}
+
+\begin{itemize}
+    \item Experiment with different kernel sizes, number of filters, padding, and stride values.
+    \item Compare different pooling strategies such as Max Pooling and Average Pooling.
+    \item Analyze the effect of optimizer, batch size, and number of training epochs on model performance.
+\end{itemize}
+
+
+\bigskip
+
+\textbf{Task 6: Feature Map Visualization}
+
+\begin{itemize}
+    \item Extract feature maps from intermediate convolutional layers.
+    \item Visualize the learned feature representations.
+    \item Observe how low-level and high-level image features are progressively extracted.
+\end{itemize}
+
+
+\bigskip
+
+\textbf{Task 7: Model Evaluation}
+
+\begin{itemize}
+    \item Evaluate the trained CNN on the test dataset.
+    \item Compute Accuracy, Precision, Recall, and F1-Score.
+    \item Generate the Confusion Matrix and Classification Report.
+\end{itemize}
+
+
+\bigskip
+
+\textbf{Task 8: Performance Visualization}
+
+\begin{itemize}
+    \item Plot training and validation accuracy curves.
+    \item Plot training and validation loss curves.
+    \item Display correctly and incorrectly classified sample images.
+    \item Summarize the overall CNN performance for the CIFAR-10 dataset.
+\end{itemize}
+
+
+% \section*{7. Hyperparameter Optimization}
+
+% Instead of manually selecting hyperparameters, students shall perform automated hyperparameter optimization using either \textbf{GridSearchCV} or \textbf{RandomizedSearchCV} (recommended) together with the SciKeras wrapper.
+
+% Optimize the following search space.
+
+% \begin{center}
+% \begin{tabular}{|p{5cm}|p{7cm}|}
+% \hline
+% Hyperparameter & Candidate Values\\
+% \hline
+% Hidden Layers & 1, 2, 3\\
+% Hidden Neurons & 32, 64, 128, 256\\
+% Learning Rate & 0.1, 0.01, 0.001\\
+% Batch Size & 16, 32, 64, 128\\
+% Epochs & 10, 20, 30\\
+% Optimizer & SGD, Adam, RMSProp\\
+% Activation Function & ReLU, Tanh, Sigmoid\\
+% Dropout Rate (Optional) & 0.0, 0.2, 0.5\\
+% \hline
+% \end{tabular}
+% \end{center}
+
+% \subsection*{Tasks}
+
+% \begin{enumerate}
+% \item Build a baseline MLP model.
+% \item Define the hyperparameter search space.
+% \item Perform Grid Search or Randomized Search using 5-fold cross-validation.
+% \item Record the best hyperparameter combination.
+% \item Retrain the model using the optimized hyperparameters.
+% \item Evaluate the optimized model on the testing dataset.
+% \item Compare the optimized model with the baseline model.
+% \end{enumerate}
+
+\section*{8. Source Code}
+
+
+The complete source code, datasets, generated plots, and report files for this experiment are available in the following GitHub repository:
+
+
+
+\noindent\textbf{GitHub Repository:} \\
+\url{https://github.com/VIKASNI-S/Deep-Learning-Lab/tree/main/Lab-2}\\
+
+
+\section*{9. Plots and their Inference}
+
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{EPS_Figures/sample_images.eps}
+\caption{Sample images from the CIFAR-10 dataset representing the ten object classes.}
+\label{fig:sample_images}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{EPS_Figures/class_distribution.eps}
+\caption{Distribution of images across the ten classes in the CIFAR-10 training dataset.}
+\label{fig:class_distribution}
+\end{figure}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=\linewidth]{EPS_Figures/cnn_architecture.eps}
+% \caption{Architecture of the proposed Convolutional Neural Network.}
+% \label{fig:cnn_architecture}
+% \end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{EPS_Figures/accuracy_curve.eps}
+\caption{Training and validation accuracy over training epochs.}
+\label{fig:accuracy}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{EPS_Figures/loss_curve.eps}
+\caption{Training and validation loss over training epochs.}
+\label{fig:loss}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{EPS_Figures/ConvLayer_1_FeatureMaps.eps}
+\caption{Feature maps generated by the first convolutional layer.}
+\label{fig:conv1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{EPS_Figures/ConvLayer_2_FeatureMaps.eps}
+\caption{Feature maps generated by the second convolutional layer.}
+\label{fig:conv2}
+\end{figure}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=\linewidth]{EPS_Figures/ConvLayer_3_FeatureMaps.eps}
+% \caption{Feature maps generated by the third convolutional layer.}
+% \label{fig:conv3}
+% \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[
+        width=0.9\linewidth,
+        height=0.75\textheight,
+        keepaspectratio
+    ]{EPS_Figures/ConvLayer_3_FeatureMaps.eps}
+    \caption{Feature maps generated by the third convolutional layer.}
+    \label{fig:conv3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{EPS_Figures/Learned_Filters_ConvLayer_1.eps}
+\caption{Learned convolution kernels of the first convolutional layer.}
+\label{fig:filters1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{EPS_Figures/Learned_Filters_ConvLayer_2.eps}
+\caption{Learned convolution kernels of the second convolutional layer.}
+\label{fig:filters2}
+\end{figure}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=\linewidth]{EPS_Figures/Learned_Filters_ConvLayer_3.eps}
+% \caption{Learned convolution kernels of the third convolutional layer.}
+% \label{fig:filters3}
+% \end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[
+        width=0.9\linewidth,
+        height=0.75\textheight,
+        keepaspectratio
+    ]{EPS_Figures/Learned_Filters_ConvLayer_3.eps}
+    \caption{Learned convolution kernels of the third convolutional layer.}
+    \label{fig:filters3}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\linewidth]{EPS_Figures/confusion_matrix.eps}
+\caption{Confusion matrix of the CNN model on the CIFAR-10 test dataset.}
+\label{fig:confusion}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\linewidth]{EPS_Figures/hyperparameter_accuracy.eps}
+\caption{Validation accuracy obtained using different optimizers and batch sizes.}
+\label{fig:hyperparameter}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+% \item Class Distribution
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.75\textwidth]{Class_Distribution.eps}
+% \caption{Class Distribution}
+% \label{fig:classdistribution}
+% \end{figure}
+% \noindent
+% The class distribution is balanced with equal amount of training images for each category. This reduces class bias and helps the model learn all classes uniformly.
+
+
+% \vspace{0.5cm}
+% \item Training Accuracy vs Epoch
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.75\textwidth]{Training_Accuracy.eps}
+% \caption{Training Accuracy vs Epoch}
+% \label{fig:trainingaccuracy}
+% \end{figure}
+% \noindent
+% The training accuracy increases steadily with each epoch, indicating that the MLP is effectively learning patterns from the training data. The curve eventually stabilizes, suggesting convergence of the model.
+% \vspace{0.5cm}
+
+% \item Validation Accuracy vs Epoch
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.75\textwidth]{Validation_Accuracy.eps}
+% \caption{Validation Accuracy vs Epoch}
+% \label{fig:validationaccuracy}
+% \end{figure}
+% \noindent
+% The validation accuracy improves along with the training accuracy and stabilizes after several epochs. This indicates that the model generalizes well to unseen data without significant overfitting.
+% \vspace{0.5cm}
+
+% \item Training Loss vs Epoch
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.75\textwidth]{Training_Loss.eps}
+% \caption{Training Loss vs Epoch}
+% \label{fig:trainingloss}
+% \end{figure}
+% \noindent
+% The training loss decreases consistently as the epochs progress, showing that the model is minimizing classification errors. The gradual reduction in loss reflects successful optimization during training.
+% \vspace{0.5cm}
+
+% \item Validation Loss vs Epoch
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.75\textwidth]{Validation_Loss.eps}
+% \caption{Validation Loss vs Epoch}
+% \label{fig:validationloss}
+% \end{figure}
+% \noindent
+% The validation loss decreases initially, indicating improved learning and better generalization. Minor fluctuations in later epochs suggest slight overfitting while maintaining stable performance.
+% \vspace{0.5cm}
+
+% \item Confusion Matrix
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.75\textwidth]{Confusion_Matrix.eps}
+% \caption{Confusion Matrix}
+% \label{fig:confusionmatrix}
+% \end{figure}
+% \noindent
+% The majority of the predictions lie on the diagonal of the confusion matrix, showing correct classification for the majority of the test samples. Most of the misclassifications are among visually similar clothing categories such as Shirt, T-shirt and Pullover.
+% \vspace{0.5cm}
+
+% \item Hyperparameter Search Results
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.75\textwidth]{Hyperparameter_Search.eps}
+% \caption{Hyperparameter Search Results}
+% \label{fig:hyperparameter}
+% \end{figure}
+% \noindent
+% The hyperparameters search identifies the parameter combination that achieves the highest cross-validation accuracy. This demonstrates that selecting appropriate hyperparameters can significantly improve model performance.
+% \vspace{0.5cm}
+
+% \item Best Model Accuracy Comparison
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=0.75\textwidth]{Best_Model_Accuracy_Comparison.eps}
+% \caption{Best Model Accuracy Comparison}
+% \label{fig:bestmodel}
+% \end{figure}
+% \noindent
+% The optimized MLP achieves higher classification accuracy than the baseline model. This confirms that hyperparameter optimization enhances the overall predictive performance of the network.
+% \vspace{0.5cm}
+% \end{enumerate}
+
+
+% \section*{10. Results}
+
+% \textbf{Best Hyperparameters}
+
+% \begin{tabular}{|p{6cm}|p{6cm}|}
+% \hline
+% Hidden Layers & 1\\\hline 
+% Hidden Neurons & 128\\\hline
+% Learning Rate & 0.001\\\hline
+% Batch Size & 16\\\hline
+% Optimizer & Adam\\\hline
+% Activation Function & ReLu\\\hline
+% Epochs & 10\\\hline
+% Dropout & 0.0\\\hline
+% Cross-validation Accuracy & 0.8781\\\hline
+% Testing Accuracy & 0.8809\\\hline
+% \end{tabular}
+
+% \vspace{3mm}
+
+% \textbf{Performance Comparison}
+
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{|p{4cm}|c|c|}
+% \hline
+% \textbf{Metric} & \textbf{Baseline} & \textbf{Optimized} \\
+% \hline
+% Accuracy & 0.8802 & 0.8809 \\ \hline
+% Precision & 0.8824 & 0.8815 \\ \hline
+% Recall & 0.8802 & 0.8809 \\ \hline
+% F1-score & 0.8789 & 0.8808 \\ \hline
+% Training Time & 180.11 & 85.58 \\ \hline
+% \end{tabular}
+% \caption{Performance Comparison Between Baseline and Optimized MLP Models}
+% \end{table}
+
+% \section*{11. Discussion}
+
+% \begin{enumerate}
+
+% \item \textbf{Which optimization method was used?}
+
+% Randomized Search with 5-fold Cross Validation (\texttt{RandomizedSearchCV}) was used for automated hyperparameter optimization. This method randomly evaluates a fixed number of hyperparameter combinations and selects the configuration that achieves the highest cross-validation accuracy.
+
+% \vspace{0.3cm}
+
+% \item \textbf{Which hyperparameters were selected?}
+
+% The optimization process selected the best combination of hyperparameters, including the number of hidden layers, number of neurons, activation function, optimizer, learning rate, batch size, number of epochs, and dropout rate. The optimal values obtained in this experiment were:
+
+% \begin{itemize}
+%     \item Hidden Layers : 1
+%     \item Hidden Neurons : 128
+%     \item Activation Function : ReLU
+%     \item Optimizer : Adam
+%     \item Learning Rate : 0.001
+%     \item Batch Size : 16
+%     \item Epochs : 10
+%     \item Dropout Rate : 0.0
+% \end{itemize}
+
+
+% \vspace{0.3cm}
+
+% \item \textbf{Did optimization improve performance?}
+
+% Yes. Hyperparameter optimization improved the overall performance of the MLP model by selecting a more suitable combination of parameters. The optimized model achieved higher classification accuracy and better evaluation metrics than the baseline model.
+
+% \vspace{0.3cm}
+
+% \item \textbf{Which hyperparameter had the greatest impact?}
+
+% Among all the hyperparameters, the learning rate and optimizer had the greatest impact on the model's performance because they directly influenced the convergence speed and stability during training. The number of hidden neurons also significantly affected the model's learning capability.
+
+% \vspace{0.3cm}
+
+
+% \item \textbf{Compare Grid Search and Randomized Search.}
+
+% \begin{itemize}
+%     \item \textbf{Grid Search} evaluates every possible combination of hyperparameters, whereas \textbf{Randomized Search} evaluates only a randomly selected subset of combinations.
+    
+%     \item Grid Search is computationally expensive and time-consuming, while Randomized Search is faster and more computationally efficient.
+    
+%     \item Grid Search guarantees finding the best combination within the specified search space, whereas Randomized Search finds a near-optimal solution with significantly less computation.
+    
+%     \item Grid Search is suitable for small search spaces, while Randomized Search is preferred for large search spaces with many hyperparameters.
+% \end{itemize}
+
+% \vspace{0.3cm}
+
+% \item \textbf{Recommend the best MLP configuration.}
+
+% The recommended MLP configuration consists of one hidden layer with 128 neurons, ReLU activation function, Adam optimizer, learning rate of 0.001, batch size of 16, training for 10 epochs, and a dropout rate of 0.0. This configuration provided the best balance between classification accuracy, computational efficiency, and generalization on the Fashion-MNIST dataset.
+
+% \end{enumerate}
+
+% \section*{12. Perceptron Learning for XOR Gate}
+
+% The XOR gate was implemented using the perceptron learning algorithm with initial weights and bias set to zero. During training, the weights and bias were updated after every misclassified sample, and the decision boundary corresponding to each update was plotted. Unlike the OR, AND, and NOT gates, the perceptron was unable to converge because the XOR dataset is not linearly separable.
+
+% \subsection*{12.1 Learning Process}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{XOR_Gate-split-split.png}
+   
+%     \label{fig:xor_gate2}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{XOR_Gate-split-split (1).png}
+   
+%     \label{fig:xor_gate3}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{XOR_Gate-split (1)-split.png}
+    
+%     \label{fig:xor_gate}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{XOR_Gate-split (1)-split (1).png}
+   
+%     \label{fig:xor_gate1}
+% \end{figure}
+
+
+% \subsection*{12.2 Analysis}
+
+% \textbf{Inference:}
+% \begin{itemize}
+%     \item The decision boundary keeps changing throughout training and does not stabilize, indicating that the perceptron fails to find a single linear separator for the XOR dataset.
+%     \item The weight values oscillate between different configurations because correcting one misclassified sample causes another previously correct sample to become misclassified.
+% \end{itemize}
+
+% \subsection{Pattern Preventing Convergence}
+
+% The XOR gate consists of the following input-output pairs:
+
+
+
+% The positive samples \((0,1)\) and \((1,0)\) lie diagonally opposite each other, while the negative samples \((0,0)\) and \((1,1)\) occupy the remaining two corners of the input space. As a result, no single straight line can separate the two classes.
+
+% Consequently, the perceptron repeatedly updates its weights without reaching a stable solution, resulting in non-convergence. This demonstrates the limitation of a single-layer perceptron and motivates the use of multilayer perceptrons with hidden layers for solving non-linearly separable problems such as XOR.
+
+\section*{13. References}
+\begin{enumerate}
+\item Goodfellow et al., \emph{Deep Learning}.
+\item Bishop, \emph{Pattern Recognition and Machine Learning}.
+\item Haykin, \emph{Neural Networks and Learning Machines}.
+\item Fashion-MNIST Dataset.
+\item TensorFlow/Keras Documentation.
+\end{enumerate}
+
+\end{document}
