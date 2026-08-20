@@ -972,17 +972,60 @@ LeNet has a relatively small number of layers and parameters, so it requires muc
 
 \begin{enumerate}
 
-\item Implement transfer learning using VGG16.
+\item \textbf{Implement transfer learning using VGG16.}
 
-\item Repeat the experiment using ResNet50.
+VGG16 pretrained on ImageNet was used as the base model. Initially, its 
+convolutional layers were frozen and a new classification head was added 
+for the 10 CIFAR-10 classes. After initial training, the fifth convolutional 
+block was unfrozen and fine-tuned using a smaller learning rate.
 
-\item Compare Adam and SGD optimizers.
+\item \textbf{Repeat the experiment using ResNet50.}
 
-\item Compare training with frozen layers and fine tuning.
+ResNet50 pretrained on ImageNet was used with a new classification head for 
+CIFAR-10. The pretrained layers were initially frozen. The last residual 
+block was then unfrozen and fine-tuned using a smaller learning rate.
 
-\item Evaluate the model using Precision, Recall and F1-score.
+\item \textbf{Compare Adam and SGD optimizers.}
 
-\item Compare the performance of LeNet, AlexNet and ResNet.
+Adam uses adaptive learning rates and generally converges faster, while SGD 
+uses a fixed learning rate and may require careful tuning. Adam was used in 
+this experiment for efficient training and fine-tuning.
+
+\item \textbf{Compare training with frozen layers and fine tuning.}
+
+With frozen layers, only the newly added classification layers are trained, 
+making training faster and reducing overfitting. Fine-tuning unfreezes some 
+pretrained layers, allowing the model to adapt better to the target dataset 
+but requiring more computation.
+
+\item \textbf{Evaluate the model using Precision, Recall and F1-score.}
+
+Precision measures the correctness of positive predictions, while Recall 
+measures how many actual samples are correctly identified. F1-score is the 
+harmonic mean of Precision and Recall.
+
+\[
+\text{Precision}=\frac{TP}{TP+FP}
+\]
+
+\[
+\text{Recall}=\frac{TP}{TP+FN}
+\]
+
+\[
+\text{F1-score}=
+\frac{2\times\text{Precision}\times\text{Recall}}
+{\text{Precision}+\text{Recall}}
+\]
+
+Weighted averaging was used for the CIFAR-10 multiclass evaluation.
+
+\item \textbf{Compare the performance of LeNet, AlexNet and ResNet.}
+
+LeNet is the simplest and least computationally demanding model. AlexNet is 
+deeper and can learn more complex features. ResNet50 is much deeper and uses 
+residual connections along with ImageNet transfer learning. Therefore, 
+ResNet50 provides the best performance among the three.
 
 \end{enumerate}
 
