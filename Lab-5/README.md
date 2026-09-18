@@ -1,14 +1,15 @@
-CNN Training & Optimization on Oxford-IIIT Pet Dataset
+CNN Training and Optimization on Oxford-IIIT Pet Dataset
+Overview
 
-This project explores Convolutional Neural Network (CNN) training and optimization using the Oxford-IIIT Pet Dataset. All images are resized to 224×224×3 for model training.
+This project studies CNN training and optimization using the Oxford-IIIT Pet Dataset. Images are resized to 224×224×3 for multi-class pet breed classification.
 
 Experiments
 
-The study investigates the impact of:
+The project evaluates:
 
 Weight initialization
 
-Regularization techniques
+Regularization
 
 Batch Normalization
 
@@ -16,41 +17,52 @@ Dropout
 
 Optimization algorithms
 
-CNN architecture and hyperparameters
+CNN hyperparameters
 
 Transfer learning
 
-Fine-tuning with MobileNetV2
+MobileNetV2 fine-tuning
 
-Model & Evaluation
+5-fold cross-validation
 
-Multiple configurations are trained and compared based on their performance. 5-fold cross-validation is used to identify the best-performing configuration, which is then evaluated on an independent test set.
+Methodology
+
+Different CNN configurations are trained and evaluated using validation performance. MobileNetV2 is used for transfer learning and fine-tuning. The best configuration is selected using 5-fold cross-validation and then evaluated on an independent test set.
 
 Dataset
 
-Oxford-IIIT Pet Dataset
-
-37 pet categories
-
-RGB images
-
-Input size: 224×224×3
+Oxford-IIIT Pet Dataset — 37 cat and dog breed classes.
 
 Technologies
 
 Python
 
-TensorFlow / Keras
+TensorFlow/Keras
 
 NumPy
 
-Matplotlib
+Pandas
 
 Scikit-learn
 
-Objective
+Matplotlib
 
-The main objective is to understand how different training strategies, regularization methods, optimization techniques, and transfer learning approaches affect CNN performance.
+Seaborn
 
-Course/Experiment: CNN Training and Optimization
-Dataset: Oxford-IIIT Pet Dataset
+Evaluation
+
+Models are evaluated using:
+
+Accuracy
+
+Precision
+
+Recall
+
+F1-score
+
+Confusion Matrix
+
+Results
+
+The final results and comparisons are provided in the results/ directory.
